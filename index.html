@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Palak 💖 Be My Valentine?</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 22px;
+      text-align: center;
+      width: 360px;
+      box-shadow: 0 25px 45px rgba(0,0,0,0.25);
+      animation: popIn 0.8s ease;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      position: relative;
+      height: 110px;
+    }
+
+    button {
+      padding: 12px 26px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      margin-right: 10px;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.12);
+      box-shadow: 0 12px 25px rgba(255,77,109,0.5);
+    }
+
+    #noBtn {
+      background: #d3d3d3;
+      position: absolute;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 16px;
+      min-height: 24px;
+      color: #444;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .heart {
+      font-size: 42px;
+      animation: float 1.5s infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Palak 💖</h1>
+    <p>Will you be my Valentine?</p>
+
+    <div class="buttons">
+      <button id="yesBtn">YES 💕</button>
+      <button id="noBtn">No 🙄</button>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <!-- AUDIO -->
+  <audio id="yesSound" loop>
+    <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-piano-melody-347.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="noSound">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+    const yesSound = document.getElementById("yesSound");
+    const noSound = document.getElementById("noSound");
+
+    const messages = [
+      "Hey Palak… that was rude 😐",
+      "Are you sure? I’m kinda amazing 👀",
+      "Think again pls 🥺",
+      "My mom already likes you 😭",
+      "I told my friends already 😳",
+      "OK THIS IS GETTING PERSONAL 💔"
+    ];
+
+    let count = 0;
+
+    function moveButton() {
+      const x = Math.random() * 260 - 130;
+      const y = Math.random() * 90 - 45;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+      message.textContent = messages[count % messages.length];
+      count++;
+    }
+
+    noBtn.addEventListener("mouseover", () => {
+      noSound.currentTime = 0;
+      noSound.play();
+      moveButton();
+    });
+
+    noBtn.addEventListener("click", moveButton);
+
+    yesBtn.addEventListener("mouseover", () => {
+      yesSound.play();
+    });
+
+    yesBtn.addEventListener("mouseout", () => {
+      yesSound.pause();
+      yesSound.currentTime = 0;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      yesSound.play();
+      document.querySelector(".card").innerHTML = `
+        <div class="heart">❤️</div>
+        <h1>YAY Palak!!! 💃🕺</h1>
+        <p>
+          Best decision of your life 😌✨<br><br>
+          Let’s achieve it together everything from now 💞🌍
+        </p>
+      `;
+    });
+  </script>
+
+</body>
+</html>
